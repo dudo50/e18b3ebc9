@@ -1,9 +1,9 @@
 
-##Dušan Morháč, Richard Medzihradský
+## Dušan Morháč, Richard Medzihradský
 
-##FRONT END APLIKÁCIE
+## FRONT END APLIKÁCIE
 
-#Prerequisites:
-React Native <br />
-Android studio - w Android phone in virtual manager <br />
+# Prerequisites:
+React Native\
+Android studio - w Android phone in virtual manager\
 
