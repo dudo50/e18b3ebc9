@@ -5,5 +5,5 @@
 
 # Prerequisites:
 React Native\
-Android studio - w Android phone in virtual manager\
+Android studio - w Android phone in virtual manager
 
