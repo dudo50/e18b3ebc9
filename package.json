@@ -1,5 +1,5 @@
 {
-  "name": "reacnativeapp",
+  "name": "e18b3ebc9",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
@@ -10,16 +10,31 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@apollo/client": "^3.5.10",
+    "@react-navigation/native": "^6.0.10",
+    "@react-navigation/native-stack": "^6.6.1",
+    "@types/react-native": "^0.67.3",
     "axios": "^0.26.1",
     "expo": "~44.0.0",
     "expo-status-bar": "~1.2.0",
+    "graphql": "^16.3.0",
+    "native-base": "^3.3.11",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
-    "react-native-web": "0.17.1"
+    "react-native-paper": "^4.12.0",
+    "react-native-safe-area-context": "3.3.2",
+    "react-native-screens": "~3.10.1",
+    "react-native-vector-icons": "^9.1.0",
+    "react-native-web": "0.17.1",
+    "react-router-native": "^6.3.0",
+    "styled-components": "^5.3.5",
+    "styled-system": "^5.1.5",
+    "react-native-svg": "12.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "typescript": "~4.3.5"
   },
   "private": true
 }

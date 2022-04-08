@@ -3,6 +3,9 @@ import React from "react"
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import {useState, useEffect } from "react";
 import axios from "axios";
+import { Provider as PaperProvider, TextInput } from "react-native-paper";
+import { theme } from "./AppStyle";
+import AppNavigator from './app/appNavigator';
 
 export default function App() {
   const [users, setUsers] = useState([])
@@ -16,18 +19,12 @@ export default function App() {
       console.log(error)
     }
     }
-    getAllUsers()
   }, [])
   return (
-    <View style={styles.container}>
-      <Text>Hello I am working</Text>
-      <FlatList
-      data = {users}
-      renderItem={({item})=><Text>{item.username}, {item.password}</Text>}
-      keyExtractor={item=> item.user_id}
-      />
-      <StatusBar style="auto" />
-    </View>
+    
+    <PaperProvider theme={theme}>
+      <AppNavigator />
+    </PaperProvider>
   );
 }
 
