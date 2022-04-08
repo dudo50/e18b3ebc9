@@ -7,14 +7,18 @@ export const homeStyle = StyleSheet.create({
         paddingTop: 100,
       },
       listItem: {
-        marginTop: 2,
-        backgroundColor: "#1A3069",
+        marginTop: 10,
+        backgroundColor: "rgb(101,37,131)",
         borderWidth: 1,
         borderColor: "black",
         borderRadius: 5,
       },
       text: {
-        color: "white"
+        color: "white",
+      },
+      textt: {
+        textAlign: 'center',
+        color: "white",
       },
       image: {
         width: 150,

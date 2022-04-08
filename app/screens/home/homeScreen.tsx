@@ -18,9 +18,11 @@ const HomeScreen = () => {
         .then((json) => setData(json))
         .catch((error) => console.error(error))
         .finally(() => setLoading(false));
+        setTextik("Showing all games in library")
     }, []);
 
     const [text, setText] = useState('');
+    const [textik, setTextik] = useState('');
     console.log(text)
     const searchSpecific = () => {
         if(text != "")
@@ -31,6 +33,7 @@ const HomeScreen = () => {
         .then((json) => setData(json))
         .catch((error) => console.error(error))
         .finally(() => setLoading(false));
+        setTextik("You searched for: " + text)
         }
         else {
             const url = "https://game-browser-application.herokuapp.com/api/games"
@@ -39,6 +42,7 @@ const HomeScreen = () => {
             .then((json) => setData(json))
             .catch((error) => console.error(error))
             .finally(() => setLoading(false));
+            setTextik("Showing all games in library")
             }
     }
 
@@ -47,6 +51,9 @@ const HomeScreen = () => {
             <ScrollView>
                 <HeaderComponent title="Game library" />
                 <View style={homeStyle.container}>
+                    <View style={homeStyle.listItem}>
+                    <Text style={homeStyle.textt}>{textik}</Text>
+                    </View>
                     <TextInput onChangeText={newText => setText(newText)} defaultValue={text} label = "Search for game" keyboardType="default"></TextInput>
                     <Button onPress={searchSpecific} mode='contained'>Search</Button>
                     {data.map((item, index) => (
