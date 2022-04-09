@@ -41,7 +41,7 @@ export const RegisterScreen = (props: RegisterScreenProps)  => {
                 Alert.alert("Incorrect details enterred!")
             }
             else{
-                props.navigation.navigate("Home")
+                props.navigation.navigate("Home", {userId: data})
             }
     }
     return(

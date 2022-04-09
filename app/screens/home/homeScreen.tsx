@@ -11,11 +11,12 @@ interface HomeScreenProps {
     navigation: any;
 }
 
-const HomeScreen = ({ navigation } , props: HomeScreenProps) => {
+const HomeScreen = ({ route, navigation } , props: HomeScreenProps) => {
+    const { userId } = route.params;
+    console.log(userId)
     const url = "https://game-browser-application.herokuapp.com/api/games"
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
-    console.log(data)
     useEffect(() => {
       fetch(url)
         .then((response) => response.json())
@@ -27,7 +28,6 @@ const HomeScreen = ({ navigation } , props: HomeScreenProps) => {
 
     const [text, setText] = useState('');
     const [textik, setTextik] = useState('');
-    console.log(text)
     async function searchSpecific() {
         if(text != "")
         {
@@ -54,13 +54,14 @@ const HomeScreen = ({ navigation } , props: HomeScreenProps) => {
             <ScrollView>
                 <HeaderComponent title="Game library" />
                 <View style={homeStyle.container}>
+                    <Button onPress={() => {navigation.navigate('Main', {userId: userId}); }} mode="contained">Main menu</Button>
                     <View style={homeStyle.listItem}>
                     <Text style={homeStyle.textt}>{textik}</Text>
                     </View>
                     <TextInput onChangeText={newText => setText(newText)} defaultValue={text} label = "Search for game" keyboardType="default"></TextInput>
                     <Button onPress={searchSpecific} mode='contained'>Search</Button>
                     {data.map((item, index) => (
-                    <TouchableOpacity  onPress={() => {navigation.navigate('Game', {itemId: item.game_id}); }}>
+                    <TouchableOpacity  onPress={() => {navigation.navigate('Game', {itemId: item.game_id, userId: userId}); }}>
                         <View style={homeStyle.listItem} key={index}>
                         <Image style={homeStyle.image} source={require("./logo.png")}/>
                         <Text style={homeStyle.text}>{item.name + '\nRelease date: ' + item.released + "\nDeveloper: " +item.developer + "\nDescription: " + item.description}</Text>

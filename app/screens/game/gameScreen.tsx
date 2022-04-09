@@ -10,10 +10,10 @@ import { HeaderComponent } from "../../components/header/headerComponent";
 
 const GameScreen = ({ route, navigation }) => {
     const { itemId } = route.params;
+    const { userId } = route.params;
     const url = "https://game-browser-application.herokuapp.com/api/game/" + itemId
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
-    console.log(data)
     useEffect(() => {
       fetch(url)
         .then((response) => response.json())
@@ -40,10 +40,13 @@ const GameScreen = ({ route, navigation }) => {
                     <Text style={[gameStyle.listItem, gameStyle.textt]} onPress={() => Linking.openURL(item.link)}>Link</Text>                 
                     </View>
                 </View>
+                    <Text style={[gameStyle.listItem, gameStyle.textt]}>Tags: {item.tags}</Text>
+                    <Text style={[gameStyle.listItem, gameStyle.textt]}>Description: {item.description}</Text>
+                    <Button mode='contained' style={gameStyle.listItem}>My review</Button>
                     </View> 
 
                     ))}
-                     <Button onPress={() => navigation.goBack()}>Go back</Button>
+                     <Button mode='contained' style={gameStyle.listItem} onPress={() => navigation.goBack()}>Go back</Button>
                     <StatusBar style="auto" />
             </ScrollView>
         </SafeAreaView>
