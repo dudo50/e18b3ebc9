@@ -5,8 +5,6 @@ import { loginStyle } from "./loginStyle";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet,Image , Text, FlatList, ScrollView, TouchableOpacity } from 'react-native';
 import {useState, useEffect } from "react";
-import { HeaderComponent } from "../../components/header/headerComponent";
-import { Item } from "react-native-paper/lib/typescript/components/Drawer/Drawer";
 
 interface LoginScreenProps {
     navigation: any;
@@ -15,18 +13,16 @@ interface LoginScreenProps {
 const LoginScreen = (props: LoginScreenProps) => {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
-    async function login() {
+    const login = async () => {
         //Req na login
         const url = "https://game-browser-application.herokuapp.com/api/login/" + text + "&" +textik 
         console.log(url)
-        await fetch(url,  {method: 'PUT', headers: {
+        const resp = await fetch(url,  {method: 'PUT', headers: {
             "Accept": "application/json",
             "Content-Type": "application/json"
         }})
-        .then((response) => response.json())
-        .then((json) => setData(json))
-        .catch((error) => console.error(error))
-        .finally(() => setLoading(false));
+        const data = await resp.json();
+        setData(data);
         if(data == 0)
         {
             Alert.alert("Incorrect details enterred!")

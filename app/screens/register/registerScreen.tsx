@@ -24,7 +24,7 @@ export const RegisterScreen = (props: RegisterScreenProps)  => {
     async function register() {
         const url = "https://game-browser-application.herokuapp.com/api/register"
             console.log(url)
-            await fetch(url,  {method: 'POST', headers: {
+            const resp = await fetch(url,  {method: 'POST', headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
@@ -34,10 +34,8 @@ export const RegisterScreen = (props: RegisterScreenProps)  => {
                 "password": textt
             })
             })
-            .then((response) => response.json())
-            .then((json) => setData(json))
-            .catch((error) => console.error(error))
-            .finally(() => setLoading(false));
+            const data = await resp.json();
+            setData(data);
             if(data == 0)
             {
                 Alert.alert("Incorrect details enterred!")

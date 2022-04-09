@@ -60,10 +60,10 @@ const HomeScreen = ({ navigation } , props: HomeScreenProps) => {
                     <TextInput onChangeText={newText => setText(newText)} defaultValue={text} label = "Search for game" keyboardType="default"></TextInput>
                     <Button onPress={searchSpecific} mode='contained'>Search</Button>
                     {data.map((item, index) => (
-                    <TouchableOpacity>
+                    <TouchableOpacity  onPress={() => {navigation.navigate('Game', {itemId: item.game_id}); }}>
                         <View style={homeStyle.listItem} key={index}>
                         <Image style={homeStyle.image} source={require("./logo.png")}/>
-                        <Text onPress={() => {navigation.navigate('Game', {itemId: item.game_id}); }} style={homeStyle.text}>{item.name + '\nRelease date: ' + item.released + "\nDeveloper: " +item.developer + "\nDescription: " + item.description}</Text>
+                        <Text style={homeStyle.text}>{item.name + '\nRelease date: ' + item.released + "\nDeveloper: " +item.developer + "\nDescription: " + item.description}</Text>
                         </View> 
                     </TouchableOpacity>
                     ))}

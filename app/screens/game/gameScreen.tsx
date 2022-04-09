@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { gameStyle } from "./gameStyle";
 import { HeaderComponent } from "../../components/header/headerComponent";
 
+
 const GameScreen = ({ route, navigation }) => {
     const { itemId } = route.params;
     const url = "https://game-browser-application.herokuapp.com/api/game/" + itemId
