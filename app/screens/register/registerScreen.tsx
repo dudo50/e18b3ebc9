@@ -8,6 +8,9 @@ import { Alert, } from "react-native";
 import { Card,  } from "react-native-paper";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet,Image , Text, FlatList, TouchableOpacity } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+
+
 
 interface RegisterScreenProps {
     navigation: any;
@@ -53,6 +56,7 @@ export const RegisterScreen = (props: RegisterScreenProps)  => {
                 <TextInput onChangeText={newTextik => setTextik(newTextik)} defaultValue={textik} label="Email"></TextInput>
                 <TextInput onChangeText={newTextt => setTextt(newTextt)} defaultValue={textt} label="Password" secureTextEntry={true} right={<TextInput.Icon name="eye-off-outline"/>}/>    
                 <Button onPress={register} style={registerStyle.button} mode="contained">Register</Button>  
+                <Button mode='contained' style={registerStyle.button} onPress={() => props.navigation.goBack()}>Go back to login</Button>
                 </View>     
             </ScrollView>
         </SafeAreaView>

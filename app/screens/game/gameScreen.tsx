@@ -42,7 +42,7 @@ const GameScreen = ({ route, navigation }) => {
                 </View>
                     <Text style={[gameStyle.listItem, gameStyle.textt]}>Tags: {item.tags}</Text>
                     <Text style={[gameStyle.listItem, gameStyle.textt]}>Description: {item.description}</Text>
-                    <Button mode='contained' style={gameStyle.listItem}>My review</Button>
+                    <Button mode='contained' style={gameStyle.listItem} onPress={() => navigation.navigate("Review", {userId: userId, gameId: itemId})}>My review</Button>
                     </View> 
 
                     ))}

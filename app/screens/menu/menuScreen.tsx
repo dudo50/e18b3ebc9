@@ -51,7 +51,7 @@ const MainScreen = ({ route, navigation } , props: MainScreenProps) => {
         <Button mode='contained' style={menuStyle.listItem} onPress={() => navigation.navigate("User", {userId: userId})}>User profile</Button>
         <Button mode='contained' style={menuStyle.listItem}>Videoconference</Button>
         <Button mode='contained' style={menuStyle.listItem} onPress={() => navigation.goBack()}>Go back</Button>
-        <Button mode='contained' style={menuStyle.listItem} onPress={signOut}>Sign out</Button>
+        <Button mode='contained' style={menuStyle.listItemm} onPress={signOut}>Sign out</Button>
         </SafeAreaView>
     );
 }
