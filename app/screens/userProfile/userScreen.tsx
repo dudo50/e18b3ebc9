@@ -41,14 +41,12 @@ const UserScreen = ({ route, navigation } , props: UserScreenProps) => {
                     }}}
                         
                         const url = "https://game-browser-application.herokuapp.com/api/profile/update/" + userId + "&" + psw + "&" + username + "&" + password + "&" + email 
-                        console.log(url)
                         const resp = await fetch(url,  {method: 'PUT', headers: {
                             "Accept": "application/json",
                             "Content-Type": "application/json"
                         }})
                         const data = await resp.json();
                         setData(data);
-                        console.log(data)
                         if(data == 1){
                             setLab( "Current username: " + username)
                             setLabbb("Current email: " + email)
@@ -64,8 +62,6 @@ const UserScreen = ({ route, navigation } , props: UserScreenProps) => {
                     }               
     }
     const { userId } = route.params;
-    console.log(userId)
-    console.log(username,password,email)
     const login = async () => {
             //Req na login
             const url = "https://game-browser-application.herokuapp.com/api/profile/get/" + userId 
@@ -98,6 +94,7 @@ const UserScreen = ({ route, navigation } , props: UserScreenProps) => {
         <TextInput onChangeText={newText => setPW(newText)} defaultValue={password} label = {labb} keyboardType="default"></TextInput>
         <TextInput onChangeText={newText => setEmail(newText)} defaultValue={email} label = {labbb} keyboardType="default"></TextInput>
         <Button onPress={changeDetails} mode="contained" style={userStyle.listItem}>Change details</Button>
+        <Button mode='contained' style={userStyle.listItem} onPress={() => navigation.goBack()}>Go back</Button>
 </SafeAreaView>
     );
 }
