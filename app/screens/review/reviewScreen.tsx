@@ -138,7 +138,7 @@ const ReviewScreen = ({ route, navigation } , props: ReviewScreenProps) => {
         <Text style={reviewStyle.textt}>Select star rating:</Text>
         <StarRating maxStars = {5} starSize = {65} rating={rate} onChange={setRating}/>
         <Text style={[reviewStyle.listItem, reviewStyle.text]}>Your review text will be: {text}</Text>
-        <TextInput  onChangeText={newText => setText(newText)} multiline = {true} numberOfLines = {4} style={[reviewStyle.listItem, reviewStyle.textSpec]} label="Update review text"></TextInput>
+        <TextInput  onChangeText={newText => setText(newText)} multiline = {true} numberOfLines = {4} style={[reviewStyle.listItem]} label="Update review text"></TextInput>
         
         <Button mode='contained' style={reviewStyle.listItem} onPress={deleteRev}>Delete review</Button>
         <Button mode='contained' style={reviewStyle.listItem} onPress={updateReview} >Save review</Button>

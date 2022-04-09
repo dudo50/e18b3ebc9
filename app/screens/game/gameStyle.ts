@@ -14,6 +14,13 @@ export const gameStyle = StyleSheet.create({
         textAlign: 'center',
         color: "white",
       },
+      texttt: {
+        textAlign: 'left',
+        color: "white",
+      },
+      starz: {
+        color: "white",
+      },
       img: {
         marginTop: 10,
         marginLeft: 10,

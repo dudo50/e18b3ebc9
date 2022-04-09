@@ -6,6 +6,9 @@ import { Card, TextInput, Button, Title } from "react-native-paper";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { gameStyle } from "./gameStyle";
 import { HeaderComponent } from "../../components/header/headerComponent";
+import StarRating from 'react-native-star-rating-widget';
+import { stripIgnoredCharacters } from 'graphql';
+
 
 
 const GameScreen = ({ route, navigation }) => {
@@ -14,13 +17,35 @@ const GameScreen = ({ route, navigation }) => {
     const url = "https://game-browser-application.herokuapp.com/api/game/" + itemId
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
+    const [dataaa, setDataaa] = useState([]);
+    const [dats, setDats] = useState([]);
+
+    const fetchReviews = async () => {
+        const urll = "https://game-browser-application.herokuapp.com/api/reviews/" + itemId
+        const respp = await fetch(urll)
+        const dataa = await respp.json();
+        setDataaa(dataa);
+        const urlll = "https://game-browser-application.herokuapp.com/api//profile/get/" + userId
+        const resppp = await fetch(urlll)
+        const dataaaa = await resppp.json();
+        const username = dataaaa[0]["username"]
+        setDats(username)
+
+    }
     useEffect(() => {
       fetch(url)
         .then((response) => response.json())
         .then((json) => setData(json))
         .catch((error) => console.error(error))
         .finally(() => setLoading(false));
+
+        fetchReviews()
     }, []);
+
+
+    const doNothing = () => {
+
+    }
 
     return (
         <SafeAreaView>
@@ -44,7 +69,13 @@ const GameScreen = ({ route, navigation }) => {
                     <Text style={[gameStyle.listItem, gameStyle.textt]}>Description: {item.description}</Text>
                     <Button mode='contained' style={gameStyle.listItem} onPress={() => navigation.navigate("Review", {userId: userId, gameId: itemId})}>My review</Button>
                     </View> 
-
+                    ))}
+                    {dataaa.map((item, index) => (
+                        <View style={[gameStyle.listItem]} key={index}>
+                        <Text style={[gameStyle.texttt]}> User: {dats} </Text>
+                        <StarRating  maxStars = {5} starSize = {20} rating={item.stars} onChange={doNothing}/>
+                        <Text style={[gameStyle.texttt]}>{item.text}</Text>
+                        </View> 
                     ))}
                      <Button mode='contained' style={gameStyle.listItem} onPress={() => navigation.goBack()}>Go back</Button>
                     <StatusBar style="auto" />

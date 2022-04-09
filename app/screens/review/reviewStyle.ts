@@ -18,10 +18,6 @@ export const reviewStyle = StyleSheet.create({
       text: {
         color: "white",
       },
-      textSpec: {
-        color: "white",
-        textAligh: "center",
-      },
       textt: {
         textAlign: 'center',
         color: "black",
