@@ -28,11 +28,11 @@ const HomeScreen = ({ navigation } , props: HomeScreenProps) => {
     const [text, setText] = useState('');
     const [textik, setTextik] = useState('');
     console.log(text)
-    const searchSpecific = () => {
+    async function searchSpecific() {
         if(text != "")
         {
         const url = "https://game-browser-application.herokuapp.com/api/game/search/" + text
-        fetch(url)
+        await fetch(url)
         .then((response) => response.json())
         .then((json) => setData(json))
         .catch((error) => console.error(error))
@@ -41,7 +41,7 @@ const HomeScreen = ({ navigation } , props: HomeScreenProps) => {
         }
         else {
             const url = "https://game-browser-application.herokuapp.com/api/games"
-            fetch(url)
+            await fetch(url)
             .then((response) => response.json())
             .then((json) => setData(json))
             .catch((error) => console.error(error))

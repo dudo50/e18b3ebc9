@@ -6,7 +6,6 @@ import { Card, TextInput, Button, Title } from "react-native-paper";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { gameStyle } from "./gameStyle";
 import { HeaderComponent } from "../../components/header/headerComponent";
-import { OpenURLButton } from '../../components/header/browseRedirect';
 
 const GameScreen = ({ route, navigation }) => {
     const { itemId } = route.params;
