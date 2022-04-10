@@ -18,5 +18,10 @@ export const userStyle = StyleSheet.create({
         marginTop: 10,
         marginLeft: 50,
         marginRight: 10,
-      }
+      },
+      container: {
+        marginTop: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
 })

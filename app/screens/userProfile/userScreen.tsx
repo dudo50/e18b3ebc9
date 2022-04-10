@@ -6,6 +6,7 @@ import { Card, TextInput, Button } from "react-native-paper";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { HeaderComponent } from "../../components/header/headerComponent";
 import { userStyle } from "./userStyle";
+import * as ImagePicker from 'expo-image-picker';
 
 
 interface UserScreenProps {
@@ -23,6 +24,7 @@ const UserScreen = ({ route, navigation } , props: UserScreenProps) => {
     const [labbb, setLabbb] = useState("");
     const [psw, setPsw] = useState("");
     const [usr, setUser] = useState("");
+    let [selectedImage, setSelectedImage] = useState("");
     const [em, setEm] = useState("");
     
     const changeDetails = async () => {
@@ -80,22 +82,63 @@ const UserScreen = ({ route, navigation } , props: UserScreenProps) => {
             setUser(data[0]["username"])
             setEm(data[0]["email"])
     }       
-
+    const uril = "https://game-browser-application.herokuapp.com/api/picture/" + userId
+    console.log(uril)
     useEffect(() => {
         login();
       }, []);
+    const openImagePickerAsync = async () => {
+        let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        
+        if (permissionResult.granted === false) {
+            alert("Permission to access camera roll is required!");
+            return;
+        }
+        
+        let pickerResult = await ImagePicker.launchImageLibraryAsync();
+        setSelectedImage({
+            uri: pickerResult.uri,
+            name: 'SomeImageName.jpg',
+            type: 'image/jpg',
+          });
+          upload()
+        }
+
+        async function upload() {
+            try {
+            const url = "https://game-browser-application.herokuapp.com/api/upload/picture/" + userId
+              const data = new FormData();
+              data.append("image", selectedImage);
+          
+              await fetch(url, {
+                method: "POST",
+                body: data,
+              });
+            } catch (error) {
+              console.log(error);
+            }
+          }
 
     return(
         <SafeAreaView>
         <HeaderComponent title="User profile"></HeaderComponent>
-        <Image style={userStyle.img} source={require("./logo.png")}/>
-        <Button>Change profile picture</Button>
+        <>
+        <ScrollView>
+        <View style={userStyle.container}>
+        <Image
+            style={{width: "100%", height: 220}}
+            source={{uri:"https://game-browser-application.herokuapp.com/api/picture/" + userId + "&" + new Date()}}
+        />
+        </View>
+        <Button onPress={openImagePickerAsync}>Change profile picture</Button>
         <TextInput onChangeText={newText => setName(newText)} defaultValue={username} label = {lab} keyboardType="default"></TextInput>
         <TextInput onChangeText={newText => setPW(newText)} defaultValue={password} label = {labb} keyboardType="default"></TextInput>
         <TextInput onChangeText={newText => setEmail(newText)} defaultValue={email} label = {labbb} keyboardType="default"></TextInput>
         <Button onPress={changeDetails} mode="contained" style={userStyle.listItem}>Change details</Button>
         <Button mode='contained' style={userStyle.listItem} onPress={() => navigation.goBack()}>Go back</Button>
-</SafeAreaView>
+        </ScrollView>
+        </>
+    </SafeAreaView>
     );
 }
 

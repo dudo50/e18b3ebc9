@@ -25,5 +25,10 @@ export const gameStyle = StyleSheet.create({
         marginTop: 10,
         marginLeft: 10,
         marginRight: 10,
-      }
+      },
+      container: {
+        marginTop: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
 })

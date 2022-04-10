@@ -6,6 +6,7 @@ import { Card, TextInput, Button } from "react-native-paper";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { homeStyle } from "./homeStyle";
 import { HeaderComponent } from "../../components/header/headerComponent";
+import { Item } from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
 
 interface HomeScreenProps {
     navigation: any;
@@ -49,6 +50,8 @@ const HomeScreen = ({ route, navigation } , props: HomeScreenProps) => {
             setTextik("Showing all games in library")
             }
     }
+
+
     return (
         <SafeAreaView>
             <ScrollView>
@@ -61,9 +64,12 @@ const HomeScreen = ({ route, navigation } , props: HomeScreenProps) => {
                     <TextInput onChangeText={newText => setText(newText)} defaultValue={text} label = "Search for game" keyboardType="default"></TextInput>
                     <Button onPress={searchSpecific} mode='contained'>Search</Button>
                     {data.map((item, index) => (
-                    <TouchableOpacity  onPress={() => {navigation.navigate('Game', {itemId: item.game_id, userId: userId}); }}>
-                        <View style={homeStyle.listItem} key={index}>
-                        <Image style={homeStyle.image} source={require("./logo.png")}/>
+                    <TouchableOpacity  key={index}  onPress={() => {navigation.navigate('Game', {itemId: item.game_id, userId: userId}); }}>
+                        <View style={homeStyle.listItem}>
+                        <Image
+                        style={{width: "100%", height: 220}}
+                        source={{uri:"https://game-browser-application.herokuapp.com/api/gamepicture/" + item.game_id + "&" + new Date()}}
+                        />
                         <Text style={homeStyle.text}>{item.name + '\nRelease date: ' + item.released + "\nDeveloper: " +item.developer + "\nDescription: " + item.description}</Text>
                         </View> 
                     </TouchableOpacity>

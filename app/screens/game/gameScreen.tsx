@@ -25,11 +25,6 @@ const GameScreen = ({ route, navigation }) => {
         const respp = await fetch(urll)
         const dataa = await respp.json();
         setDataaa(dataa);
-        const urlll = "https://game-browser-application.herokuapp.com/api//profile/get/" + userId
-        const resppp = await fetch(urlll)
-        const dataaaa = await resppp.json();
-        const username = dataaaa[0]["username"]
-        setDats(username)
 
     }
     useEffect(() => {
@@ -41,12 +36,19 @@ const GameScreen = ({ route, navigation }) => {
 
         fetchReviews()
     }, []);
+    const uril = "https://game-browser-application.herokuapp.com/api/gamepicture/" + itemId
 
 
     const doNothing = () => {
 
     }
-
+    const queryUser = async () => {
+        const urlll = "https://game-browser-application.herokuapp.com/api/profile/get/" + userId
+        const resppp = await fetch(urlll)
+        const dataaaa = await resppp.json();
+        const username = dataaaa[0]["username"]
+        return username
+    }
     return (
         <SafeAreaView>
             <ScrollView>
@@ -54,7 +56,12 @@ const GameScreen = ({ route, navigation }) => {
                     {data.map((item, index) => (
                     <View key={index}>
                     <Title style={[gameStyle.listItem, gameStyle.textt]}>{item.name}</Title>
-                    <Image  style={gameStyle.img} source={require("./logo.png")}/>
+                    <View style={gameStyle.container}>
+                    <Image
+                        style={{width: "100%", height: 220}}
+                        source={{uri:"https://game-browser-application.herokuapp.com/api/gamepicture/" + itemId + "&" + new Date()}}
+                        />
+                    </View>
                     <Text style={[gameStyle.listItem, gameStyle.textt]}>Developer: {item.developer}</Text>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View style={{ flex: 1, paddingLeft: 0 }}>
@@ -72,7 +79,7 @@ const GameScreen = ({ route, navigation }) => {
                     ))}
                     {dataaa.map((item, index) => (
                         <View style={[gameStyle.listItem]} key={index}>
-                        <Text style={[gameStyle.texttt]}> User: {dats} </Text>
+                        <Text style={[gameStyle.texttt]}> User: {item.user} </Text>
                         <StarRating  maxStars = {5} starSize = {20} rating={item.stars} onChange={doNothing}/>
                         <Text style={[gameStyle.texttt]}>{item.text}</Text>
                         </View> 
