@@ -7,7 +7,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { gameStyle } from "./gameStyle";
 import { HeaderComponent } from "../../components/header/headerComponent";
 import StarRating from 'react-native-star-rating-widget';
-import { stripIgnoredCharacters } from 'graphql';
 
 
 
@@ -36,7 +35,6 @@ const GameScreen = ({ route, navigation }) => {
 
         fetchReviews()
     }, []);
-    const uril = "https://game-browser-application.herokuapp.com/api/gamepicture/" + itemId
 
 
     const doNothing = () => {

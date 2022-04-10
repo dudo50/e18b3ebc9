@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { HeaderComponent } from "../../components/header/headerComponent";
 import { userStyle } from "./userStyle";
 import * as ImagePicker from 'expo-image-picker';
+import axios from 'axios';
 
 
 interface UserScreenProps {
@@ -82,8 +83,6 @@ const UserScreen = ({ route, navigation } , props: UserScreenProps) => {
             setUser(data[0]["username"])
             setEm(data[0]["email"])
     }       
-    const uril = "https://game-browser-application.herokuapp.com/api/picture/" + userId
-    console.log(uril)
     useEffect(() => {
         login();
       }, []);
@@ -96,28 +95,17 @@ const UserScreen = ({ route, navigation } , props: UserScreenProps) => {
         }
         
         let pickerResult = await ImagePicker.launchImageLibraryAsync();
-        setSelectedImage({
-            uri: pickerResult.uri,
-            name: 'SomeImageName.jpg',
-            type: 'image/jpg',
-          });
-          upload()
-        }
-
-        async function upload() {
-            try {
-            const url = "https://game-browser-application.herokuapp.com/api/upload/picture/" + userId
-              const data = new FormData();
-              data.append("image", selectedImage);
-          
-              await fetch(url, {
-                method: "POST",
-                body: data,
-              });
-            } catch (error) {
-              console.log(error);
-            }
-          }
+        const dataa = Object.values(pickerResult);
+        var data = new FormData();
+        data.append('image', { 
+          // @ts-ignore 
+          path: dataa[2], // Don't replace the file with ''..
+          originalname: "profilePic" + userId + ".jpg",
+          type: "image/jpg",
+          fieldname: "demo_image"
+        })
+        console.log(data)
+        const uploadImage = await axios.post(`http://localhost:8000/api/upload/picture/` + userId, data);    }
 
     return(
         <SafeAreaView>

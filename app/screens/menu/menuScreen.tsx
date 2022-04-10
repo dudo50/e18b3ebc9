@@ -49,7 +49,7 @@ const MainScreen = ({ route, navigation } , props: MainScreenProps) => {
         <HeaderComponent title="Main menu"></HeaderComponent>
         <Button mode='contained' style={menuStyle.listItem} onPress={() => navigation.navigate("Home", {userId: userId})}>Search games</Button>
         <Button mode='contained' style={menuStyle.listItem} onPress={() => navigation.navigate("User", {userId: userId})}>User profile</Button>
-        <Button mode='contained' style={menuStyle.listItem}>Videoconference</Button>
+        <Button mode='contained' style={menuStyle.listItem} onPress={() => navigation.navigate("Screen", {userId: userId})}>Videoconference</Button>
         <Button mode='contained' style={menuStyle.listItem} onPress={() => navigation.goBack()}>Go back</Button>
         <Button mode='contained' style={menuStyle.listItemm} onPress={signOut}>Sign out</Button>
         </SafeAreaView>
