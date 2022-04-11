@@ -120,6 +120,8 @@ const UserScreen = ({ route, navigation } , props: UserScreenProps) => {
                 Accept: 'application/json',
             }
         })
+        const data = await res.json();
+        console.log("response" + data)
     }
 
     return(
