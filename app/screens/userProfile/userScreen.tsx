@@ -11,14 +11,12 @@ import axios from 'axios';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types'
 
 
-
 interface UserScreenProps {
     navigation: any;
 }
 
 const UserScreen = ({ route, navigation } , props: UserScreenProps) => {
     const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [username, setName] = useState("");
     const [password, setPW] = useState("");
     const [email, setEmail] = useState("");
@@ -27,8 +25,9 @@ const UserScreen = ({ route, navigation } , props: UserScreenProps) => {
     const [labbb, setLabbb] = useState("");
     const [psw, setPsw] = useState("");
     const [usr, setUser] = useState("");
-    let [selectedImage, setSelectedImage] = useState("");
+    const [selectedImage, setSelectedImage] = useState("");
     const [em, setEm] = useState("");
+    const [response, setResponse] = useState();
     
     const changeDetails = async () => {
         //Req na login
@@ -73,7 +72,6 @@ const UserScreen = ({ route, navigation } , props: UserScreenProps) => {
             const resp = await fetch(url)
             const data = await resp.json();
             setData(data);
-            setLoading(false)
             console.log(data)
             setName(data[0]["username"])
             setPW(data[0]["password"])
@@ -97,31 +95,38 @@ const UserScreen = ({ route, navigation } , props: UserScreenProps) => {
         }
         
         let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             quality: 1,
         });
         console.log(result)
-        if(!result.cancelled)
+        const { cancelled } = result as ImageInfo
+        if(cancelled == false)
         {
-            const { uri } = result as ImageInfo
-            setSelectedImage(uri)
-        }
-        console.log(selectedImage)
-        const bodyy = new FormData();
-        const bod = JSON.parse(JSON.stringify({ uri: selectedImage, type: 'image/jpeg', name: 'profilePicture'+userId+".jpg" }));
-        bodyy.append('demo_image', bod);
 
-        const res = await fetch("https://game-browser-application.herokuapp.com/api/upload/picture/" + userId, {
-            method:'POST',
-            body: bodyy,
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                Accept: 'application/json',
-            }
-        })
-        const data = await res.json();
-        console.log("response" + data)
+        const { uri } = result as ImageInfo
+        const imageType = uri.split('.')[1];
+        const bodyy = new FormData();
+        const bod = JSON.parse(JSON.stringify({ uri: uri, type: 'image/'+imageType, name: 'profilePicture'+userId+".jpg" }));
+        bodyy.append('demo_image', bod);
+        try{
+            await fetch("https://game-browser-application.herokuapp.com/api/upload/picture/" + userId, {
+                method:'POST',
+                body: bodyy,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Accept: 'application/json',
+                }
+            })
+            Alert.alert("Profile picture uploaded!")
+        }
+        catch (error){
+            console.log(error)
+        }
+        }
+        else{
+            Alert.alert("You did not choose picture to upload.")
+        }
     }
 
     return(
