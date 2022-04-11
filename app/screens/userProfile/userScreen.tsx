@@ -8,6 +8,8 @@ import { HeaderComponent } from "../../components/header/headerComponent";
 import { userStyle } from "./userStyle";
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
+import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types'
+
 
 
 interface UserScreenProps {
@@ -94,18 +96,31 @@ const UserScreen = ({ route, navigation } , props: UserScreenProps) => {
             return;
         }
         
-        let pickerResult = await ImagePicker.launchImageLibraryAsync();
-        const dataa = Object.values(pickerResult);
-        var data = new FormData();
-        data.append('image', { 
-          // @ts-ignore 
-          path: dataa[2], // Don't replace the file with ''..
-          originalname: "profilePic" + userId + ".jpg",
-          type: "image/jpg",
-          fieldname: "demo_image"
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            quality: 1,
+        });
+        console.log(result)
+        if(!result.cancelled)
+        {
+            const { uri } = result as ImageInfo
+            setSelectedImage(uri)
+        }
+        console.log(selectedImage)
+        const bodyy = new FormData();
+        const bod = JSON.parse(JSON.stringify({ uri: selectedImage, type: 'image/jpeg', name: 'profilePicture'+userId+".jpg" }));
+        bodyy.append('demo_image', bod);
+
+        const res = await fetch("https://game-browser-application.herokuapp.com/api/upload/picture/" + userId, {
+            method:'POST',
+            body: bodyy,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Accept: 'application/json',
+            }
         })
-        console.log(data)
-        const uploadImage = await axios.post(`http://localhost:8000/api/upload/picture/` + userId, data);    }
+    }
 
     return(
         <SafeAreaView>
