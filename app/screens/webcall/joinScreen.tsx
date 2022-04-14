@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, StyleSheet, Button, View } from 'react-native';
 
 import { RTCPeerConnection, RTCView, mediaDevices, RTCIceCandidate, RTCSessionDescription } from 'react-native-webrtc';
-import { db } from '../utilities/firebase';
+//import { db } from '../utilities/firebase';
 
 const configuration = {
   iceServers: [

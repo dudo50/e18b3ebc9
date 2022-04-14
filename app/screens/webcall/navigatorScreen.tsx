@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, SafeAreaView, RecyclerViewBackedScrollView } from 'react-native';
-//import RoomScreen from './roomScreen';
-//import CallScreen from './callScreen';
-//import JoinScreen from './joinScreen';
+import RoomScreen from './roomScreen';
+import CallScreen from './callScreen';
+import JoinScreen from './joinScreen';
 
 
 
@@ -26,15 +26,15 @@ interface NavigScreenProps {
   let content;
   switch (screen) {
     case screens.ROOM:
-      //content = <RoomScreen roomId={roomId} setRoomId={setRoomId} screens={screens} setScreen={setScreen} />
+      content = <RoomScreen roomId={roomId} setRoomId={setRoomId} screens={screens} setScreen={setScreen} />
       break;
 
     case screens.CALL:
-      //content = <CallScreen roomId={roomId} screens={screens} setScreen={setScreen} />
+      content = <CallScreen roomId={roomId} screens={screens} setScreen={setScreen} />
       break;
 
     case screens.JOIN:
-      //content = <JoinScreen roomId={roomId} screens={screens} setScreen={setScreen} />
+      content = <JoinScreen roomId={roomId} screens={screens} setScreen={setScreen} />
       break;
 
     default:
