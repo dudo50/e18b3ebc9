@@ -5,15 +5,12 @@ import { Card, TextInput, Button } from "react-native-paper";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { HeaderComponent } from "../../components/header/headerComponent";
 import { userStyle } from "./userStyle";
-import * as ImagePicker from 'expo-image-picker';
-import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types'
+import ImagePicker, { launchImageLibrary } from "react-native-image-picker"
+import RNFetchBlob from 'rn-fetch-blob'
 
 
-interface UserScreenProps {
-    navigation: any;
-}
 
-const UserScreen = ({ route, navigation } , props: UserScreenProps) => {
+const UserScreen = ({ route, navigation }) => {
     const [data, setData] = useState([]);
     const [username, setName] = useState("");
     const [password, setPW] = useState("");
@@ -84,48 +81,58 @@ const UserScreen = ({ route, navigation } , props: UserScreenProps) => {
     useEffect(() => {
         login();
       }, []);
-    const openImagePickerAsync = async () => {
-        let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        
-        if (permissionResult.granted === false) {
-            alert("Permission to access camera roll is required!");
-            return;
-        }
-        
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            quality: 1,
-        });
-        console.log(result)
-        const { cancelled } = result as ImageInfo
-        if(cancelled == false)
-        {
 
-        const { uri } = result as ImageInfo
-        const imageType = uri.split('.')[1];
-        const bodyy = new FormData();
-        const bod = JSON.parse(JSON.stringify({ uri: uri, type: 'image/'+imageType, name: 'profilePicture'+userId+".jpg" }));
-        bodyy.append('demo_image', bod);
-        console.log(bodyy)
-        try{
-            await fetch("https://game-browser-application.herokuapp.com/api/upload/picture/" + userId, {
-                method:'POST',
-                body: bodyy,
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Accept: "application/json"
-                }
-            })
-            Alert.alert("Profile picture uploaded!")
+    const useImageCallback = React.useCallback(response => {
+        if(response.didCancel) {
+            Alert.alert("You cancelled image picking.")
+            console.log("cancelled")
+        } else if (response.errorCode) {
+            console.log(response.errorMessage)
+        } else {
+            handleUpload(response)
+               }
+    }, []); 
+
+    const handleUpload = async (response) => {
+
+        console.log(response)
+        const formData = new FormData()
+
+        // formData.append('profileImage',{ name, uri, type})
+        
+        // Example code
+
+        formData.append('demo_image', JSON.parse(JSON.stringify({uri: response.assets[0].uri, type: "image/jpeg", name: "profilePicture" + userId + ".jpg"})))
+        
+        try{  
+            RNFetchBlob.fetch('POST', "https://game-browser-application.herokuapp.com/api/upload/picture/" + userId, {
+                'Content-Type' : 'multipart/form-data',
+            }, [
+
+                {name: "demo_image", filename:"profilePicture" + userId + ".jpg",type: "image/jpeg", data:RNFetchBlob.wrap(response.assets[0].uri)}
+            ]).then((resp) => {
+                Alert.alert("Image uploaded successfuly!")
+              }).catch((err) => {
+                console.log(err)
+              })
+            
+
         }
         catch (error){
-            console.log(error)
+            console.log(error);
         }
-        }
-        else{
-            Alert.alert("You did not choose picture to upload.")
-        }
+    }
+    const openImagePickerAsync = async () => {
+        launchImageLibrary(
+            {
+                selectionLimit: 1,
+                mediaType: "photo",
+                includeBase64: false,
+                maxHeight: 500,
+                maxWidth: 500
+            },
+            useImageCallback
+        )
     }
 
     return(
