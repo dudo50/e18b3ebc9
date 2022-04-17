@@ -38,6 +38,8 @@ const UserScreen = ({ route, navigation }) => {
                     {
                         setPW(psw)
                     }}}
+                        try{
+
                         
                         const url = "https://game-browser-application.herokuapp.com/api/profile/update/" + userId + "&" + psw + "&" + username + "&" + password + "&" + email 
                         const resp = await fetch(url,  {method: 'PUT', headers: {
@@ -55,6 +57,10 @@ const UserScreen = ({ route, navigation }) => {
                         else{
                             Alert.alert("Unable to change details, either you chose username that is taken or email that is taken.")
                         }
+                    }
+                    catch (error){
+                        Alert.alert("Unable to change details.")
+                    }
                     }
                     else{
                         Alert.alert("You did not change any details!")
